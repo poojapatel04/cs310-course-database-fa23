@@ -3,11 +3,12 @@ package edu.jsu.mcis.cs310.coursedb.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+
 
 public class SectionDAO {
     
-    // INSERT YOUR CODE HERE
+    private static final String QUERY_FIND = "select * FROM section WHERE termid = ? And subjectid = AND num = ? ORDER By crn";
+    
     
     private final DAOFactory daoFactory;
     
@@ -21,26 +22,38 @@ public class SectionDAO {
         
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData rsmd = null;
+        
         
         try {
             
             Connection conn = daoFactory.getConnection();
             
             if (conn.isValid(0)) {
+                ps = conn.prepareStatement(QUERY_FIND);
                 
-                // INSERT YOUR CODE HERE
+                ps.setInt(1, termid);
+                ps.setString(2, subjectid);
+                ps.setString(3, num);
+               
+                boolean hasresult = ps.execute();
+                
+                if (hasresults) {
+                   
+                rs = ps.getResultSet();
+                
+                result = DAOUtility.getResultSetAsJson(rs);
                 
             }
             
         }
         
-        catch (Exception e) { e.printStackTrace(); }
+        }
+        catch (Exception e) {e.printStackTrace();}
         
         finally {
             
-            if (rs != null) { try { rs.close(); } catch (Exception e) { e.printStackTrace(); } }
-            if (ps != null) { try { ps.close(); } catch (Exception e) { e.printStackTrace(); } }
+            if (rs != null) { try { rs.close(); } catch (Exception e) {e.printStackTrace();}}           
+            if (ps != null) { try { ps.close(); } catch (Exception e) {e.printStackTrace();} }
             
         }
         

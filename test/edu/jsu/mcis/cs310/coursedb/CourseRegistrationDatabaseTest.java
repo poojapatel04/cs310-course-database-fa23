@@ -7,7 +7,7 @@ import com.github.cliftonlabs.json_simple.*;
 
 public class CourseRegistrationDatabaseTest {
 
-    private static final String USERNAME = "nobody@jsu.edu";
+    private static final String USERNAME = "Poojapatel04";
     
     private DAOFactory daoFactory;
     private RegistrationDAO registrationDao;
